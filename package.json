@@ -1,0 +1,18 @@
+{
+  "name": "radio-control",
+  "version": "0.0.1",
+  "description": "",
+  "main": "radio.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "radio",
+    "mpd"
+  ],
+  "author": "cylesoft",
+  "license": "MIT",
+  "dependencies": {
+    "mpd": "^1.3.0"
+  }
+}
