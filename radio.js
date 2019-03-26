@@ -3,44 +3,47 @@
  *  ~~ RADIO CONTROL ~~
  *
  */
+
 const http = require('http');
 const mpd = require('mpd');
 const cmd = mpd.cmd;
 
 // our http server will listen for radio actions to do
 const http_server = http.createServer((req, res) => {
-    // console.log('new request for: ' + req.url);
-
     // do some stuff based on the requested path, pretty simple
     switch (req.url) {
         case '/':
-            // song info
+            // song info in a nice html manner i guess
             mpd_client.sendCommand(cmd("currentsong", []), (err, msg) => {
                 if (err) throw err;
-                // console.log(msg);
-
                 let song = mpd.parseKeyValueMessage(msg);
-                // console.log(song);
-                // console.log('Playing: ' + song.Artist + ' - ' + song.Title);
-
-                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.writeHead(200, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' });
                 res.end('<p>Playing: ' + song.Artist + ' - ' + song.Title + '</p><p><a href="/next">next</a> | <a href="/prev">previous</a></p>');
+            });
+        break;
+        case '/now':
+            // song info in raw text
+            mpd_client.sendCommand(cmd("currentsong", []), (err, msg) => {
+                if (err) throw err;
+                let song = mpd.parseKeyValueMessage(msg);
+                res.writeHead(200, { 'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*' });
+                res.end(song.Artist + ' - ' + song.Title);
             });
         break;
         case '/next':
             // next song please
             mpd_client.sendCommand(cmd("next", []), (err, msg) => {
                 if (err) throw err;
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end('ok, next! <a href="/">go back</a>');
+                res.writeHead(303, { 'Location': '/' });
+                res.end();
             });
         break;
         case '/prev':
             // previous song please
-            mpd_client.sendCommand(cmd("prev", []), (err, msg) => {
+            mpd_client.sendCommand(cmd("previous", []), (err, msg) => {
                 if (err) throw err;
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end('ok, previous! <a href="/">go back</a>');
+                res.writeHead(303, { 'Location': '/' });
+                res.end();
             });
         break;
         default:
