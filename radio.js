@@ -5,8 +5,10 @@
  */
 
 const http = require('http');
+const fs = require('fs');
 const mpd = require('mpd');
 const cmd = mpd.cmd;
+const viewTemplate = fs.readFileSync('view.html', 'utf8');
 
 // our http server will listen for radio actions to do
 const http_server = http.createServer((req, res) => {
@@ -18,7 +20,7 @@ const http_server = http.createServer((req, res) => {
                 if (err) throw err;
                 let song = mpd.parseKeyValueMessage(msg);
                 res.writeHead(200, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' });
-                res.end('<p>Playing: ' + song.Artist + ' - ' + song.Title + '</p><p><a href="/next">next</a> | <a href="/prev">previous</a></p>');
+                res.end(viewTemplate.replace(new RegExp(/\{\{ARTIST\}\}/g), song.Artist).replace(new RegExp(/\{\{TITLE\}\}/g), song.Title));
             });
         break;
         case '/now':

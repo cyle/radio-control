@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,900;1,400;1,900&display=swap" rel="stylesheet">
+<style type="text/css">
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    font-size: 40px;
+    background: black;
+    color: white;
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+}
+a {
+    color: #ddd;
+}
+b {
+    font-weight: 900;
+}
+#now-playing {
+    padding: 1em;
+}
+#controls {
+    position: fixed;
+    bottom: 1em;
+    left: 0;
+    text-align: center;
+    width: 100%;
+}
+</style>
+<title>Pirate Radio -- {{ARTIST}} - {{TITLE}}</title>
+</head>
+<body>
+<div id="now-playing">Playing: <b>{{ARTIST}} - <i>{{TITLE}}</i></b></div>
+<div id="controls"><a href="/prev">prev</a> | <a href="/next">next</a></div>
+</body>
+</html>
