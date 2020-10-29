@@ -7,3 +7,7 @@ This is just so I can hit the pi in a browser and go next/back, otherwise it shu
 - `/` shows the currently playing song
 - `/next` plays the next song
 - `/prev` plays the previous song
+
+## Web Controls
+
+This also supplies a basic one-page "Now Playing" view with next / previous controls, running on port `8080`. Customize `view.html` if you want. The `{{ARTIST}}` and `{{TITLE}}` strings in the view will be replaced by the currently playing artist and song title, respectively.
